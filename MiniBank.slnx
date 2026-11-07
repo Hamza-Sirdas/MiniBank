@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MiniBank.Application/MiniBank.Application.csproj" />
+    <Project Path="src/MiniBank.Domain/MiniBank.Domain.csproj" />
+    <Project Path="src/MiniBank.Infrastructure/MiniBank.Infrastructure.csproj" />
+    <Project Path="src/MiniBank.Web/MiniBank.Web.csproj" />
+  </Folder>
+</Solution>
