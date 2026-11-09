@@ -23,7 +23,10 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication();//whe are you(authentication)
+
+app.UseAuthorization();//what can you do(authorization)
+
 
 app.MapStaticAssets();
 
