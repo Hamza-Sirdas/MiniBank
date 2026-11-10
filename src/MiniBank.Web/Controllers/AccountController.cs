@@ -51,15 +51,18 @@ public class AccountController : Controller
     }
 
     [HttpGet]
-    public IActionResult Login()
+    public IActionResult Login(string? returnUrl = null)
     {
+        ViewData["ReturnUrl"] = returnUrl;
         return View();
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Login(LoginViewModel model)
+    public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
     {
+        ViewData["ReturnUrl"] = returnUrl;
+
         if (!ModelState.IsValid)
             return View(model);
 
@@ -67,7 +70,12 @@ public class AccountController : Controller
             model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
 
         if (result.Succeeded)
-            return RedirectToAction("Index", "Home");
+        {
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                return LocalRedirect(returnUrl);
+
+            return RedirectToAction("Index", "Dashboard");
+        }
 
         if (result.IsLockedOut)
         {
@@ -79,7 +87,6 @@ public class AccountController : Controller
         ModelState.AddModelError(string.Empty, "E-posta veya parola hatalı.");
         return View(model);
     }
-
 
     [HttpPost]
     [ValidateAntiForgeryToken]
