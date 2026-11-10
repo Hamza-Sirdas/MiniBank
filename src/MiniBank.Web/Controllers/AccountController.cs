@@ -79,4 +79,13 @@ public class AccountController : Controller
         ModelState.AddModelError(string.Empty, "E-posta veya parola hatalı.");
         return View(model);
     }
+
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Login");
+    }
 }
