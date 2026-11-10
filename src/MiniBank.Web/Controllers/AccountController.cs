@@ -42,7 +42,10 @@ public class AccountController : Controller
         var result = await _userManager.CreateAsync(user, model.Password);
 
         if (result.Succeeded)
+        {
+            await _userManager.AddToRoleAsync(user, Roles.Customer);
             return RedirectToAction("Login");
+        }
 
         foreach (var error in result.Errors)
             ModelState.AddModelError(string.Empty, error.Description);
